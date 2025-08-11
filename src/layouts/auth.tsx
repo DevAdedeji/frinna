@@ -11,7 +11,9 @@ const AuthLayout = () => {
                         <img src="/images/mockup.png" className="sm:h-[600px] w-full object-contain" alt="mockup" />
                         <p className="text-base text-center">Frinna.xyz is a free-to-use anonymous messaging website where you can register, login, share your link, get messages and continue chatting with your anonymous friend.</p>
                     </div>
-                    <Outlet />
+                    <div className="lg:order-2 order-1">
+                        <Outlet />
+                    </div>
                 </div>
             </div>
             <Footer />
