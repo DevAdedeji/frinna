@@ -16,7 +16,10 @@
   --color-midnight: #1D2E4A;
   --color-graphite: #212529;
   --color-stone: #464343;
-  --color-background: #f9f9f9
+  --color-background: #f9f9f9;
+  --color-charcoal-65: #121212A6;
+  --color-black: #000000;
+  --color-grey: #AAAAAA;
 }
 
 .custom-shadow {
