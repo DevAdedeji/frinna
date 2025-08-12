@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import AuthLayout from "./layouts/auth"
-import SignInPage from "./pages/signin"
-import SignUpPage from "./pages/signup"
+import SignInPage from "./pages/auth/signin"
+import SignUpPage from "./pages/auth/signup"
+import IndexPage from "./pages"
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
           <Route path="/auth/signin" element={<SignInPage />} />
           <Route path="/auth/signup" element={<SignUpPage />} />
         </Route>
+        <Route path="/" element={<IndexPage />} />
       </Routes>
     </BrowserRouter>
   )
