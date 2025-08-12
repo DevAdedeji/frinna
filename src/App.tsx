@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Toaster } from "react-hot-toast"
 import AuthLayout from "./layouts/auth"
 import SignInPage from "./pages/auth/signin"
 import SignUpPage from "./pages/auth/signup"
@@ -14,6 +15,16 @@ function App() {
         </Route>
         <Route path="/" element={<IndexPage />} />
       </Routes>
+      <Toaster
+        position="top-right"
+        toastOptions={{
+          duration: 5000,
+          style: {
+            background: '#1D2E4A',
+            color: '#fff',
+          },
+        }}
+      />
     </BrowserRouter>
   )
 }
