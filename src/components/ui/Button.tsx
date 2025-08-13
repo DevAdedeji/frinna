@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 type ButtonBaseProps = {
     children: React.ReactNode;
     className?: string;
-    variant?: "primary" | "secondary";
+    variant?: "primary" | "secondary" | "outline";
 }
 
 type ButtonAsButton = ButtonBaseProps & Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "className"> & { href?: never }
@@ -19,6 +19,8 @@ const getVariantStyles = (variant: ButtonProps['variant']) => {
             return "bg-sky-blue text-white"
         case "secondary":
             return "bg-midnight text-white"
+        case "outline":
+            return "bg-transparent"
         default:
             return "bg-sky-blue text-white"
     }
