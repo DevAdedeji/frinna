@@ -7,14 +7,21 @@ import { NavLink } from "react-router-dom";
 import ChangeEmailComponent from "@/components/profile/ChangeEmail";
 import ChangeUsernameComponent from "@/components/profile/ChangeUsername";
 import toast from "react-hot-toast";
+import { useAuthStore } from "@/store/useAuthStore";
 
 type View = 'default' | 'changeEmail' | 'changeUsername';
 
 const IndexPage = () => {
     const [currentView, setCurrentView] = useState<View>('default');
     const showDefaultView = () => setCurrentView('default');
+    const { user } = useAuthStore();
     const copyToClipboard = () => {
-        toast.success("Profile link copied");
+        try {
+            navigator.clipboard.writeText(`https://frinna.xyz/message/${user?.displayName ?? ""}`);
+            toast.success("Profile link copied");
+        } catch (e) {
+            throw e;
+        }
     }
     return (
         <main className="flex flex-col gap-8 sm:gap-0 w-full min-h-screen bg-background">
@@ -23,9 +30,9 @@ const IndexPage = () => {
                 <div className="w-[90%] md:w-[70%] min-h-[70vh] flex flex-col gap-10 mx-auto border border-white bg-white custom-shadow rounded-3xl px-5 py-5 sm:py-10">
                     <div className="flex flex-col items-center gap-4">
                         <p className="ubuntu-font font-bold text-[40px] text-charcoal text-center">My Profile</p>
-                        <p className="font-bold ubuntu-font text-xl text-charcoal">@DevAdedeji</p>
+                        <p className="font-bold ubuntu-font text-xl text-charcoal">@ {user?.displayName}</p>
                         <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-4 text-midnight">
-                            <p className="font-medium">https://frinna.xyz/message/Oladimeji</p>
+                            <p className="font-medium">{`https://frinna.xyz/message/${user?.displayName}`}</p>
                             <button className="cursor-pointer" onClick={copyToClipboard}>
                                 <Copy />
                             </button>
