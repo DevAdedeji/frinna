@@ -1,6 +1,6 @@
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
-import { useForm } from "react-hook-form";
+import { useForm, type RegisterOptions } from "react-hook-form";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "@/firebase";
@@ -20,6 +20,19 @@ const SignInPage = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
+
+    const passwordValidation: RegisterOptions<SignInFormInputs, "password"> = {
+        required: "Password is required",
+        minLength: {
+            value: 8,
+            message: "Password must be at least 8 characters",
+        },
+        validate: {
+            hasUpperCase: (value) => /[A-Z]/.test(value) || "Password must include an uppercase letter",
+            hasLowerCase: (value) => /[a-z]/.test(value) || "Password must include a lowercase letter",
+            hasNumber: (value) => /\d/.test(value) || "Password must include a number"
+        }
+    }
 
     const onSubmit = async (data: SignInFormInputs) => {
         setIsLoading(true);
@@ -59,15 +72,15 @@ const SignInPage = () => {
     }
     return (
 
-        <div className="w-full sm:w-[500px] bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
+        <div className="w-full bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
             <img src="/images/logo.png" className="size-[150px] object-cover" />
             <p className="text-graphite text-3xl text-center ubuntu-font">Let Us Sign You Up</p>
             <p className="text-stone text-center w-[90%] mx-auto">It’s time to receive mesage from your homies!😉</p>
-            <div className="w-[80%] flex flex-col gap-5 mx-auto">
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 mt-8">
+            <div className="w-[90%] md:w-[80%] flex flex-col gap-5 mx-auto">
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 mt-8">
                     <Input className="h-12" type="email" placeholder="Email Address" {...register("email", { required: "Email is required" })} error={errors.email?.message} />
                     <Input className="h-12" type="text" placeholder="Username" {...register("username", { required: "Username is required" })} error={errors.username?.message} />
-                    <Input className="h-12" type="password" placeholder="Password" {...register("password", { required: "Password is required" })} error={errors.password?.message} />
+                    <Input className="h-12" type="password" placeholder="Password" {...register("password", passwordValidation)} error={errors.password?.message} />
                     <Button className="h-[54px] text-[15px]" variant="secondary" type="submit" disabled={isLoading} >Sign Up</Button>
                 </form>
                 <p className="uppercase text-grey text-center py-2">OR</p>

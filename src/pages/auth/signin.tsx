@@ -37,12 +37,12 @@ const SignInPage = () => {
         }
     }
     return (
-        <div className="w-full sm:w-[500px] bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
+        <div className="w-full bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
             <img src="/images/logo.png" className="size-[150px] object-cover" />
             <p className="text-graphite text-3xl text-center ubuntu-font">Let us sign you in.</p>
             <p className="text-stone text-center w-[90%] mx-auto">Recieve, reply and chat anonymously! 😉</p>
-            <div className="w-[80%] flex flex-col gap-5 mx-auto">
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 mt-8">
+            <div className="w-[90%] md:w-[80%] flex flex-col gap-5 mx-auto">
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 mt-8">
                     <Input className="h-12" type="email" placeholder="Email Address" {...register("email", { required: "Email is required" })} error={errors.email?.message} />
                     <Input className="h-12" type="password" placeholder="Password" {...register("password", { required: "Password is required" })} error={errors.password?.message} />
                     <Button className="h-[54px] text-[15px]" variant="secondary" type="submit" disabled={isLoading} >Sign In</Button>
