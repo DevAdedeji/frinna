@@ -5,6 +5,7 @@ import SignInPage from "./pages/auth/signin"
 import SignUpPage from "./pages/auth/signup"
 import IndexPage from "./pages"
 import AuthListener from "./components/AuthListener"
+import MessageUserPage from "./pages/message"
 import { useAuthStore } from "./store/useAuthStore"
 
 function App() {
@@ -23,6 +24,9 @@ function App() {
         <Route path="/auth" element={<AuthLayout />}>
           <Route path="/auth/signin" element={<SignInPage />} />
           <Route path="/auth/signup" element={<SignUpPage />} />
+        </Route>
+        <Route path="/message" element={<AuthLayout />}>
+          <Route path="/message/:username" element={<MessageUserPage />} />
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<IndexPage />} />

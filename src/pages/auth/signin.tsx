@@ -42,7 +42,7 @@ const SignInPage = () => {
             <p className="text-graphite text-3xl text-center ubuntu-font">Let us sign you in.</p>
             <p className="text-stone text-center w-[90%] mx-auto">Recieve, reply and chat anonymously! 😉</p>
             <div className="w-[80%] flex flex-col gap-5 mx-auto">
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 mt-8">
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 mt-8">
                     <Input className="h-12" type="email" placeholder="Email Address" {...register("email", { required: "Email is required" })} error={errors.email?.message} />
                     <Input className="h-12" type="password" placeholder="Password" {...register("password", { required: "Password is required" })} error={errors.password?.message} />
                     <Button className="h-[54px] text-[15px]" variant="secondary" type="submit" disabled={isLoading} >Sign In</Button>
