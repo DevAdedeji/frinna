@@ -1,8 +1,67 @@
 import Button from "@/components/ui/Button";
+import { useCallback, useEffect, useState } from "react";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+import { db } from "@/firebase";
+import { collection, doc, getDoc, getDocs, limit, query, where } from "firebase/firestore";
 
 const MessageUserPage = () => {
+    const { user } = useAuthStore();
+
+    const { username } = useParams<{ username: string }>();
+
+    const [pageState, setPageState] = useState({
+        senderId: null as string | null,
+        recipientId: null as string | null,
+    });
+
+
+    const getAnonId = useCallback(() => {
+        const anonUserId = localStorage.getItem("frinna-anon-user-id");
+        if (anonUserId) {
+            return anonUserId;
+        }
+        const newAnonId = crypto.randomUUID();
+        localStorage.setItem("frinna-anon-user-id", newAnonId);
+        return newAnonId;
+    }, [])
+
+    useEffect(() => {
+        const initializePage = async () => {
+            setPageState(prev => ({ ...prev }))
+            try {
+                if (!username) {
+                    throw ""
+                }
+                const senderId = user ? user.uid : getAnonId();
+                const usersRef = collection(db, "users");
+                const formattedUsername = username.toLowerCase()
+                const q = query(usersRef, where("username", "==", formattedUsername), limit(1));
+                const querySnapshot = await getDocs(q);
+                if (!querySnapshot.empty) {
+                    const recipientId = querySnapshot.docs[0].id;
+                    console.log(senderId)
+                    console.log(recipientId);
+                    // setPageState({
+                    //     senderId,
+                    //     recipientId,
+                    // })
+                    // console.log(pageState);
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        }
+        initializePage();
+    }, [user, username, getAnonId]);
+
+    const handleSendMessage = () => {
+        //
+    }
+
     return (
-        <div className="w-full sm:w-[500px] bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
+        <div className="bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
             <img src="/images/logo.png" className="size-[150px] object-cover" />
             <p className="text-graphite text-3xl text-center ubuntu-font">Send A Message To User</p>
             <p className="text-stone text-center w-[90%] mx-auto">Your friend wants you to send them a message!😉</p>

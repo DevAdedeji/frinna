@@ -2,7 +2,7 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { useForm, type RegisterOptions } from "react-hook-form";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { auth, db } from "@/firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -58,6 +58,14 @@ const SignInPage = () => {
             // Add username to database
             await setDoc(usernameDocRef, { userId: user.uid });
 
+            const usersProfileDocRef = doc(db, "users", user.uid);
+            await setDoc(usersProfileDocRef, {
+                username: username.toLowerCase(),
+                email,
+                createdAt: serverTimestamp(),
+                id: user.uid,
+            })
+
             toast.success("Account created successfully", { id: toastId });
 
             navigate("/");
@@ -70,6 +78,7 @@ const SignInPage = () => {
             setIsLoading(false);
         }
     }
+
     return (
 
         <div className="w-full bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
