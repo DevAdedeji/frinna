@@ -8,20 +8,20 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-type SignInFormInputs = {
+type SignUpFormInputs = {
     email: string,
     password: string,
     username: string,
 }
 
-const SignInPage = () => {
-    const { handleSubmit, formState: { errors }, register } = useForm<SignInFormInputs>();
+const SignUpPage = () => {
+    const { handleSubmit, formState: { errors }, register } = useForm<SignUpFormInputs>();
 
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
-    const passwordValidation: RegisterOptions<SignInFormInputs, "password"> = {
+    const passwordValidation: RegisterOptions<SignUpFormInputs, "password"> = {
         required: "Password is required",
         minLength: {
             value: 8,
@@ -34,7 +34,7 @@ const SignInPage = () => {
         }
     }
 
-    const onSubmit = async (data: SignInFormInputs) => {
+    const onSubmit = async (data: SignUpFormInputs) => {
         setIsLoading(true);
         const toastId = toast.loading("Creating your account");
         try {
@@ -100,4 +100,4 @@ const SignInPage = () => {
     )
 }
 
-export default SignInPage;
+export default SignUpPage;

@@ -1,1 +1,31 @@
 import '@testing-library/jest-dom/vitest';
+import { vi } from "vitest";
+
+
+// Mocking react-hot-toast
+vi.mock('react-hot-toast', () => ({
+    default: {
+        loading: vi.fn(),
+        success: vi.fn(),
+        error: vi.fn(),
+    }
+}))
+
+vi.mock('firebase/auth', () => ({
+    createUserWithEmailAndPassword: vi.fn(),
+    updateProfile: vi.fn(),
+    signInWithEmailAndPassword: vi.fn(),
+}));
+
+vi.mock('firebase/firestore', () => ({
+    doc: vi.fn(),
+    getDoc: vi.fn(),
+    setDoc: vi.fn(),
+    serverTimestamp: vi.fn(),
+}));
+
+// Mock firebase config
+vi.mock('@/firebase', () => ({
+    auth: {},
+    db: {},
+}));
