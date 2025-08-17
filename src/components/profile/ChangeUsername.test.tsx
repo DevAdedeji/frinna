@@ -24,17 +24,19 @@ describe("Change username", () => {
         };
         vi.clearAllMocks();
         mockedUseAuthStore.mockReturnValue({ user: mockUser });
+        mockedToastLoading.mockReturnValue("loading-test-id");
     })
     it("throws an error is username is already taken", async () => {
         const user = userEvent.setup();
         mockedGetDoc.mockResolvedValue({ exists: () => true } as any);
-        mockedToastLoading.mockReturnValue("loading-test-id");
 
         render(<IndexPage />, { wrapper: BrowserRouter })
 
         await user.click(screen.getByRole("button", { name: "Change Username" }))
 
-        await user.type(screen.getByPlaceholderText("Username"), "Mayowa")
+        const usernameInput = screen.getByPlaceholderText("Username");
+        await user.clear(usernameInput);
+        await user.type(usernameInput, "Mayowa");
         await user.click(screen.getByRole("button", { name: "Change Username" }));
 
         expect(mockedGetDoc).toHaveBeenCalledTimes(1);
@@ -44,19 +46,22 @@ describe("Change username", () => {
     it("successfully change user username", async () => {
         const user = userEvent.setup();
         mockedGetDoc.mockResolvedValue({ exists: () => false } as any);
-        mockedToastLoading.mockReturnValue("loading-test-id");
 
         render(<IndexPage />, { wrapper: BrowserRouter })
 
         await user.click(screen.getByRole("button", { name: "Change Username" }))
 
-        await user.type(screen.getByPlaceholderText("Username"), "Mayowa")
+        const usernameInput = screen.getByPlaceholderText("Username");
+        await user.clear(usernameInput);
+        await user.type(usernameInput, "Mayowa");
         await user.click(screen.getByRole("button", { name: "Change Username" }));
         expect(mockedGetDoc).toHaveBeenCalledTimes(1);
         expect(mockedSetDoc).toHaveBeenCalledTimes(1);
         expect(mockedUpdateProfile).toHaveBeenCalledTimes(1);
         expect(mockedUpdateProfile).toHaveBeenCalledTimes(1);
         expect(deleteDoc).toHaveBeenCalledTimes(1);
-        expect(mockedToastSuccess).toHaveBeenCalledWith("Username changed successfully", { id: "loading-test-id" });
+        await vi.waitFor(() => {
+            expect(mockedToastSuccess).toHaveBeenCalledWith("Username changed successfully", { id: "loading-test-id" });
+        })
     })
 })
