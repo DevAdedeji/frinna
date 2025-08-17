@@ -4,6 +4,7 @@ import Button from "../ui/Button";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import toast from "react-hot-toast";
+import { useReauthenticate } from "@/hooks/useReauthenticate";
 import { updateEmail } from "firebase/auth";
 
 interface ChangeEmailComponentProps {
@@ -12,6 +13,7 @@ interface ChangeEmailComponentProps {
 
 type FormInput = {
     email: string;
+    password: string;
 }
 
 const ChangeEmailComponent = ({ onBack }: ChangeEmailComponentProps) => {
@@ -20,6 +22,8 @@ const ChangeEmailComponent = ({ onBack }: ChangeEmailComponentProps) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const { user } = useAuthStore();
+
+    const { reauthenticate } = useReauthenticate();
 
     useEffect(() => {
         if (user && user.email) {
@@ -43,6 +47,7 @@ const ChangeEmailComponent = ({ onBack }: ChangeEmailComponentProps) => {
         setIsLoading(true);
         const toastId = toast.loading("Changing your email...");
         try {
+            await reauthenticate(data.password);
             await updateEmail(user, newEmail);
             toast.success("Email changed successfully", { id: toastId });
         } catch (e: any) {
@@ -57,6 +62,7 @@ const ChangeEmailComponent = ({ onBack }: ChangeEmailComponentProps) => {
                 <p className="ubuntu-font font-bold text-2xl text-black text-center uppercase">Change Email</p>
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
                     <Input className="h-10 md:h-[54px]" type="email" placeholder="Email" {...register("email", { required: "Email is required" })} error={errors.email?.message} />
+                    <Input className="h-12" type="password" placeholder="Password" {...register("password", { required: "Password is required" })} error={errors.password?.message} />
                     <Button className="h-10 md:h-[54px]" disabled={isLoading} >Change Email</Button>
                 </form>
             </div>

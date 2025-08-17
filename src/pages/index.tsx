@@ -6,10 +6,11 @@ import Button from "@/components/ui/Button";
 import { NavLink } from "react-router-dom";
 import ChangeEmailComponent from "@/components/profile/ChangeEmail";
 import ChangeUsernameComponent from "@/components/profile/ChangeUsername";
+import ChangePasswordComponent from "@/components/profile/ChangePassword";
 import toast from "react-hot-toast";
 import { useAuthStore } from "@/store/useAuthStore";
 
-type View = 'default' | 'changeEmail' | 'changeUsername';
+type View = 'default' | 'changeEmail' | 'changeUsername' | 'changePassword';
 
 const IndexPage = () => {
     const [currentView, setCurrentView] = useState<View>('default');
@@ -51,7 +52,7 @@ const IndexPage = () => {
                             </div>
                             <div className="flex flex-col gap-4">
                                 <p className="ubuntu-font font-bold text-2xl text-black text-center uppercase">Settings</p>
-                                <div className="w-[80%] mx-auto flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <div className="w-[80%] mx-auto flex flex-col lg:flex-row items-center justify-center gap-4">
                                     <Button variant="outline" className="btn-shadow gap-4 h-12 w-[260px] !justify-normal" onClick={() => setCurrentView('changeUsername')}>
                                         <User />
                                         <p className="text-black">Change Username</p>
@@ -59,6 +60,10 @@ const IndexPage = () => {
                                     <Button variant="outline" className="btn-shadow gap-4 h-12 w-[260px] !justify-normal" onClick={() => setCurrentView('changeEmail')}>
                                         <Mail />
                                         <p className="text-black">Change Email</p>
+                                    </Button>
+                                    <Button variant="outline" className="btn-shadow gap-4 h-12 w-[260px] !justify-normal" onClick={() => setCurrentView('changePassword')}>
+                                        <User />
+                                        <p className="text-black">Change Password</p>
                                     </Button>
                                 </div>
                             </div>
@@ -69,6 +74,9 @@ const IndexPage = () => {
                     }
                     {
                         currentView === 'changeUsername' && <ChangeUsernameComponent onBack={showDefaultView} />
+                    }
+                    {
+                        currentView === 'changePassword' && <ChangePasswordComponent onBack={showDefaultView} />
                     }
                 </div>
             </div>

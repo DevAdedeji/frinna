@@ -33,3 +33,7 @@
 .ubuntu-font {
   font-family: "Ubuntu", sans-serif;
 }
+
+button {
+  cursor: pointer;
+}

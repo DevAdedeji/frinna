@@ -16,6 +16,11 @@ vi.mock('firebase/auth', () => ({
     updateProfile: vi.fn(),
     signInWithEmailAndPassword: vi.fn(),
     updateEmail: vi.fn(),
+    getAuth: vi.fn(),
+    reauthenticateWithCredential: vi.fn(),
+    EmailAuthProvider: {
+        credential: vi.fn((email, password) => ({ email, password }))
+    }
 }));
 
 vi.mock('firebase/firestore', () => ({
@@ -35,4 +40,8 @@ vi.mock('@/firebase', () => ({
 
 vi.mock('@/store/useAuthStore', () => ({
     useAuthStore: vi.fn(),
+}));
+
+vi.mock('@/hooks/useReauthenticate', () => ({
+    useReauthenticate: vi.fn(),
 }));
