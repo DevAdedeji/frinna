@@ -13,28 +13,17 @@ const MessageUserPage = () => {
 
     const [pageState, setPageState] = useState({
         senderId: null as string | null,
-        recipientId: null as string | null,
     });
 
-
-    const getAnonId = useCallback(() => {
-        const anonUserId = localStorage.getItem("frinna-anon-user-id");
-        if (anonUserId) {
-            return anonUserId;
-        }
-        const newAnonId = crypto.randomUUID();
-        localStorage.setItem("frinna-anon-user-id", newAnonId);
-        return newAnonId;
-    }, [])
 
     useEffect(() => {
         const initializePage = async () => {
             setPageState(prev => ({ ...prev }))
             try {
-                if (!username) {
-                    throw ""
+                if (!username || !user) {
+                    throw "";
                 }
-                const senderId = user ? user.uid : getAnonId();
+                const senderId = user.uid;
                 const usersRef = collection(db, "users");
                 const formattedUsername = username.toLowerCase()
                 const q = query(usersRef, where("username", "==", formattedUsername), limit(1));
@@ -54,7 +43,7 @@ const MessageUserPage = () => {
             }
         }
         initializePage();
-    }, [user, username, getAnonId]);
+    }, [user, username]);
 
     const handleSendMessage = () => {
         //

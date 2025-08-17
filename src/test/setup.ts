@@ -22,10 +22,16 @@ vi.mock('firebase/firestore', () => ({
     getDoc: vi.fn(),
     setDoc: vi.fn(),
     serverTimestamp: vi.fn(),
+    deleteDoc: vi.fn(),
+    updateDoc: vi.fn(),
 }));
 
 // Mock firebase config
 vi.mock('@/firebase', () => ({
     auth: {},
     db: {},
+}));
+
+vi.mock('@/store/useAuthStore', () => ({
+    useAuthStore: vi.fn(),
 }));
