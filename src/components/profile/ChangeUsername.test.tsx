@@ -26,6 +26,18 @@ describe("Change username", () => {
         mockedUseAuthStore.mockReturnValue({ user: mockUser });
         mockedToastLoading.mockReturnValue("loading-test-id");
     })
+    it("throws an error if old username is equal to new username", async () => {
+        const user = userEvent.setup();
+        render(<IndexPage />, { wrapper: BrowserRouter })
+
+        await user.click(screen.getByRole("button", { name: "Change Username" }))
+        const usernameInput = screen.getByPlaceholderText("Username");
+        await user.click(screen.getByRole("button", { name: "Change Username" }))
+
+        expect(usernameInput).toHaveValue("oldUsername");
+        expect(mockedToastError).toHaveBeenCalledWith("No changes made.");
+    })
+
     it("throws an error is username is already taken", async () => {
         const user = userEvent.setup();
         mockedGetDoc.mockResolvedValue({ exists: () => true } as any);
