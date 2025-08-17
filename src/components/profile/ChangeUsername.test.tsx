@@ -1,6 +1,6 @@
 import { vi, describe, it, expect, beforeEach } from "vitest";
 import userEvent from "@testing-library/user-event";
-import { doc, getDoc, updateDoc, setDoc, deleteDoc } from "firebase/firestore";
+import { getDoc, setDoc, deleteDoc } from "firebase/firestore";
 import { screen, render } from "@testing-library/react";
 import toast from "react-hot-toast";
 import { updateProfile } from "firebase/auth";

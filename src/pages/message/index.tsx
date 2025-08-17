@@ -1,10 +1,9 @@
 import Button from "@/components/ui/Button";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
 import { useParams } from "react-router-dom";
-import toast from "react-hot-toast";
 import { db } from "@/firebase";
-import { collection, doc, getDoc, getDocs, limit, query, where } from "firebase/firestore";
+import { collection, getDocs, limit, query, where } from "firebase/firestore";
 
 const MessageUserPage = () => {
     const { user } = useAuthStore();
@@ -32,11 +31,10 @@ const MessageUserPage = () => {
                     const recipientId = querySnapshot.docs[0].id;
                     console.log(senderId)
                     console.log(recipientId);
-                    // setPageState({
-                    //     senderId,
-                    //     recipientId,
-                    // })
-                    // console.log(pageState);
+                    setPageState({
+                        senderId,
+                    })
+                    console.log(pageState);
                 }
             } catch (e) {
                 console.log(e);
@@ -54,7 +52,7 @@ const MessageUserPage = () => {
             <img src="/images/logo.png" className="size-[150px] object-cover" />
             <p className="text-graphite text-3xl text-center ubuntu-font">Send A Message To User</p>
             <p className="text-stone text-center w-[90%] mx-auto">Your friend wants you to send them a message!😉</p>
-            <form className="w-[80%] mx-auto flex flex-col gap-6 mt-8">
+            <form className="w-[80%] mx-auto flex flex-col gap-6 mt-8" onSubmit={handleSendMessage}>
                 <Button className="h-[54px] w-full text-[15px]" variant="primary" type="submit">Send Message</Button>
             </form>
         </div>
