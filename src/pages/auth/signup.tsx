@@ -71,8 +71,7 @@ const SignUpPage = () => {
             navigate("/");
 
         } catch (e: any) {
-            console.log(e)
-            const errorMsg = e.message ?? e;
+            const errorMsg = e.message ?? "An unknown error occured";
             toast.error(errorMsg, { id: toastId });
         } finally {
             setIsLoading(false);
@@ -80,7 +79,6 @@ const SignUpPage = () => {
     }
 
     return (
-
         <div className="w-full bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
             <img src="/images/logo.png" className="size-[150px] object-cover" />
             <p className="text-graphite text-3xl text-center ubuntu-font">Let Us Sign You Up</p>
@@ -96,7 +94,6 @@ const SignUpPage = () => {
                 <Button href="/auth/signin" className="h-[54px] w-full">Sign In</Button>
             </div>
         </div>
-
     )
 }
 

@@ -1,0 +1,124 @@
+import { db } from "@/firebase";
+import { collection, getDocs, query, limit, where, type Timestamp, QueryDocumentSnapshot, type DocumentData, startAfter, orderBy } from "firebase/firestore";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useCallback, useEffect, useState, useRef } from "react";
+import toast from "react-hot-toast";
+
+interface AnonMessageData {
+    id: string,
+    recipientId: string,
+    messageText: string,
+    isRead: boolean,
+    isArchived: boolean,
+    createdAt: Timestamp,
+}
+
+interface MessagesPageState {
+    isLoading: boolean;
+    error: string | null;
+    messages: AnonMessageData[];
+    hasMore: boolean,
+    lastVisible: QueryDocumentSnapshot<DocumentData> | null;
+}
+
+
+const MessagesPage = () => {
+    const { user } = useAuthStore();
+    const [pageState, setPageState] = useState<MessagesPageState>({
+        isLoading: false,
+        error: null,
+        messages: [],
+        lastVisible: null,
+        hasMore: true,
+    });
+    const fetchAllMesages = useCallback(async () => {
+        if (!pageState.hasMore || !user) {
+            return;
+        }
+        if (pageState.isLoading) {
+            return;
+        }
+        setPageState(prev => ({ ...prev, isLoading: true }));
+        try {
+            const anonMessagesRef = collection(db, "anonymous_messages");
+            let q;
+            if (pageState.lastVisible) {
+                q = query(anonMessagesRef, where("recipientId", "==", user.uid), orderBy("createdAt", "desc"), startAfter(pageState.lastVisible), limit(10));
+            } else {
+                q = query(anonMessagesRef, where("recipientId", "==", user.uid), orderBy("createdAt", "desc"), limit(10))
+            }
+            const querySnapshot = await getDocs(q);
+            const newMessages = querySnapshot.docs.map(doc => ({
+                id: doc.id,
+                ...doc.data()
+            })) as AnonMessageData[];
+            const lastDoc = querySnapshot.docs[querySnapshot.docs.length - 1];
+            setPageState(prev => ({
+                ...prev,
+                isLoading: false,
+                messages: [...prev.messages, ...newMessages],
+                lastVisible: lastDoc || null,
+                hasMore: newMessages.length === 10,
+            }));
+
+        } catch (e: any) {
+            const errorMessage = e.message ?? "An unknown error occurred.";
+            toast.error(errorMessage);
+            setPageState(prev => ({ ...prev, isLoading: false, error: errorMessage }));
+        }
+    }, [user, pageState.hasMore, pageState.lastVisible, pageState.isLoading])
+
+    const initialFetchDone = useRef(false);
+    useEffect(() => {
+        if (initialFetchDone.current || !user) {
+            return;
+        }
+        initialFetchDone.current = true;
+        fetchAllMesages();
+    }, [fetchAllMesages, user])
+
+    const observer = useRef<IntersectionObserver | null>(null);
+    const lastMessageRef = useCallback((node: HTMLDivElement) => {
+        if (pageState.isLoading) return;
+        if (observer.current) observer.current.disconnect();
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && pageState.hasMore) {
+                fetchAllMesages()
+            }
+        })
+        if (node) observer.current.observe(node);
+    }, [fetchAllMesages, pageState.isLoading, pageState.hasMore]);
+
+    return (
+        <div className="flex-grow flex pb-4 w-[90%] mx-auto">
+            <div className="w-full bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
+                {
+                    pageState.messages.length > 0 &&
+                    (
+                        <div className="w-[90%] mx-auto flex flex-col gap-4">
+                            {pageState.messages.map((message: AnonMessageData, index: number) => {
+                                if (pageState.messages.length === index + 1) {
+                                    return (
+                                        <div key={message.id} ref={lastMessageRef} className="border border-charcoal-65 rounded-md p-4 flex flex-col gap-4">
+                                            <p>{message.messageText}</p>
+                                            <p className="self-end text-charcoal-65 text-sm">{message.createdAt.toDate().toLocaleDateString()}</p>
+                                        </div>
+                                    )
+                                } else {
+                                    return (
+                                        <div key={message.id} className="border border-charcoal-65 rounded-md p-4 flex flex-col gap-4">
+                                            <p>{message.messageText}</p>
+                                            <p className="self-end text-charcoal-65 text-sm">{message.createdAt.toDate().toLocaleDateString()}</p>
+                                        </div>
+                                    )
+                                }
+                            })}
+                        </div>
+                    )
+                }
+            </div>
+        </div>
+    )
+}
+
+export default MessagesPage;

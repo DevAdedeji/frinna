@@ -25,63 +25,59 @@ const IndexPage = () => {
         }
     }
     return (
-        <main className="flex flex-col gap-8 sm:gap-0 w-full min-h-screen bg-background">
-            <Header />
-            <div className="flex-grow flex pb-4">
-                <div className="w-[90%] md:w-[70%] min-h-[70vh] flex flex-col gap-10 mx-auto border border-white bg-white custom-shadow rounded-3xl px-5 py-5 sm:py-10">
-                    <div className="flex flex-col items-center gap-4">
-                        <p className="ubuntu-font font-bold text-[40px] text-charcoal text-center">My Profile</p>
-                        <p className="font-bold ubuntu-font text-xl text-charcoal">@ {user?.displayName}</p>
-                        <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-4 text-midnight">
-                            <p className="font-medium">{`https://frinna.xyz/message/${user?.displayName}`}</p>
-                            <button className="cursor-pointer" onClick={copyToClipboard}>
-                                <Copy />
-                            </button>
+        <div className="flex-grow flex pb-4">
+            <div className="w-[90%] md:w-[70%] min-h-[70vh] flex flex-col gap-10 mx-auto border border-white bg-white custom-shadow rounded-3xl px-5 py-5 sm:py-10">
+                <div className="flex flex-col items-center gap-4">
+                    <p className="ubuntu-font font-bold text-[40px] text-charcoal text-center">My Profile</p>
+                    <p className="font-bold ubuntu-font text-xl text-charcoal">@ {user?.displayName}</p>
+                    <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-4 text-midnight">
+                        <p className="font-medium">{`https://frinna.xyz/message/${user?.displayName}`}</p>
+                        <button className="cursor-pointer" onClick={copyToClipboard}>
+                            <Copy />
+                        </button>
+                    </div>
+                </div>
+                {
+                    currentView === 'default' &&
+                    <div className="flex flex-col gap-10">
+                        <div className="flex items-center justify-center">
+                            <NavLink className={"btn-shadow size-[200px] bg-white flex flex-col gap-4 items-center justify-center rounded-[5px]"} to="">
+                                <div className="rounded-[50%] bg-sky-blue flex items-center justify-center p-2 size-[50px] text-white">
+                                    <MessagesSquare />
+                                </div>
+                                <p>Messages</p>
+                            </NavLink>
+                        </div>
+                        <div className="flex flex-col gap-4">
+                            <p className="ubuntu-font font-bold text-2xl text-black text-center uppercase">Settings</p>
+                            <div className="w-[80%] mx-auto flex flex-col lg:flex-row items-center justify-center gap-4">
+                                <Button variant="outline" className="btn-shadow gap-4 h-12 w-[260px] !justify-normal" onClick={() => setCurrentView('changeUsername')}>
+                                    <User />
+                                    <p className="text-black">Change Username</p>
+                                </Button>
+                                <Button variant="outline" className="btn-shadow gap-4 h-12 w-[260px] !justify-normal" onClick={() => setCurrentView('changeEmail')}>
+                                    <Mail />
+                                    <p className="text-black">Change Email</p>
+                                </Button>
+                                <Button variant="outline" className="btn-shadow gap-4 h-12 w-[260px] !justify-normal" onClick={() => setCurrentView('changePassword')}>
+                                    <User />
+                                    <p className="text-black">Change Password</p>
+                                </Button>
+                            </div>
                         </div>
                     </div>
-                    {
-                        currentView === 'default' &&
-                        <div className="flex flex-col gap-10">
-                            <div className="flex items-center justify-center">
-                                <NavLink className={"btn-shadow size-[200px] bg-white flex flex-col gap-4 items-center justify-center rounded-[5px]"} to="">
-                                    <div className="rounded-[50%] bg-sky-blue flex items-center justify-center p-2 size-[50px] text-white">
-                                        <MessagesSquare />
-                                    </div>
-                                    <p>Messages</p>
-                                </NavLink>
-                            </div>
-                            <div className="flex flex-col gap-4">
-                                <p className="ubuntu-font font-bold text-2xl text-black text-center uppercase">Settings</p>
-                                <div className="w-[80%] mx-auto flex flex-col lg:flex-row items-center justify-center gap-4">
-                                    <Button variant="outline" className="btn-shadow gap-4 h-12 w-[260px] !justify-normal" onClick={() => setCurrentView('changeUsername')}>
-                                        <User />
-                                        <p className="text-black">Change Username</p>
-                                    </Button>
-                                    <Button variant="outline" className="btn-shadow gap-4 h-12 w-[260px] !justify-normal" onClick={() => setCurrentView('changeEmail')}>
-                                        <Mail />
-                                        <p className="text-black">Change Email</p>
-                                    </Button>
-                                    <Button variant="outline" className="btn-shadow gap-4 h-12 w-[260px] !justify-normal" onClick={() => setCurrentView('changePassword')}>
-                                        <User />
-                                        <p className="text-black">Change Password</p>
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    {
-                        currentView === 'changeEmail' && <ChangeEmailComponent onBack={showDefaultView} />
-                    }
-                    {
-                        currentView === 'changeUsername' && <ChangeUsernameComponent onBack={showDefaultView} />
-                    }
-                    {
-                        currentView === 'changePassword' && <ChangePasswordComponent onBack={showDefaultView} />
-                    }
-                </div>
+                }
+                {
+                    currentView === 'changeEmail' && <ChangeEmailComponent onBack={showDefaultView} />
+                }
+                {
+                    currentView === 'changeUsername' && <ChangeUsernameComponent onBack={showDefaultView} />
+                }
+                {
+                    currentView === 'changePassword' && <ChangePasswordComponent onBack={showDefaultView} />
+                }
             </div>
-            <Footer />
-        </main>
+        </div>
     )
 }
 

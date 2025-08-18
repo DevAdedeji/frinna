@@ -1,5 +1,5 @@
 import { useAuthStore } from "@/store/useAuthStore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Button from "./ui/Button";
 import { signOut, getAuth } from "firebase/auth";
 import toast from "react-hot-toast";
@@ -7,9 +7,6 @@ const Header = () => {
     const { user } = useAuthStore();
     const [isLoading, setIsLoading] = useState(false);
     const auth = getAuth();
-    useEffect(() => {
-        console.log(user)
-    }, [user])
     const logUserOut = async () => {
         try {
             setIsLoading(true);
