@@ -90,7 +90,7 @@ const MessagesPage = () => {
     }, [fetchAllMesages, pageState.isLoading, pageState.hasMore]);
 
     return (
-        <div className="flex-grow flex pb-4 w-[90%] mx-auto">
+        <div className="flex-grow py-0 md:py-10 w-[90%] mx-auto mb-8 sm:mb-0">
             <div className="w-full bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
                 {
                     pageState.messages.length > 0 &&

@@ -19,7 +19,7 @@ function App() {
     }
 
     return user ?
-      <main className="flex flex-col gap-8 sm:gap-0 w-full min-h-screen bg-background">
+      <main className="flex flex-col w-full min-h-screen bg-background">
         <Header />
         <Outlet />
         <Footer />

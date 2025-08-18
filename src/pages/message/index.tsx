@@ -2,7 +2,7 @@ import Button from "@/components/ui/Button";
 import TextArea from "@/components/ui/TextArea";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "@/store/useAuthStore";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { db } from "@/firebase";
 import { collection, getDocs, limit, query, where, serverTimestamp, addDoc, } from "firebase/firestore";
 import { useForm } from "react-hook-form";
@@ -86,6 +86,7 @@ const MessageUserPage = () => {
                 <TextArea className="h-[170px]" placeholder="Type in your message" {...register("messageText", { required: "Message is required" })} error={errors.messageText?.message} />
                 <Button className="h-[54px] w-full text-[15px]" variant="primary" type="submit" disabled={isLoading}>Send Message</Button>
             </form>
+            <Link className="mt-4 text-midnight underline text-sm text-center" to="/auth/signup">Create an account</Link>
         </div>
     )
 }

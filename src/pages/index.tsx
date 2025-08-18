@@ -23,7 +23,7 @@ const IndexPage = () => {
         }
     }
     return (
-        <div className="flex-grow flex pb-4">
+        <div className="flex-grow py-0 md:py-10 w-[90%] mx-auto mb-8 sm:mb-0">
             <div className="w-[90%] md:w-[70%] min-h-[70vh] flex flex-col gap-10 mx-auto border border-white bg-white custom-shadow rounded-3xl px-5 py-5 sm:py-10">
                 <div className="flex flex-col items-center gap-4">
                     <p className="ubuntu-font font-bold text-[40px] text-charcoal text-center">My Profile</p>
