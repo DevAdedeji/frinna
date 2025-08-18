@@ -10,7 +10,7 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
     user: null,
-    isLoading: false,
+    isLoading: true,
     setUser: (user) => set({ user, isLoading: false }),
     setLoading: (loading) => set({ isLoading: loading }),
 }))

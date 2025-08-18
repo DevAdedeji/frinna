@@ -5,7 +5,11 @@ import SignInPage from "./pages/auth/signin"
 import SignUpPage from "./pages/auth/signup"
 import IndexPage from "./pages"
 import AuthListener from "./components/AuthListener"
+import MessageUserPage from "./pages/message"
 import { useAuthStore } from "./store/useAuthStore"
+import MessagesPage from "./pages/messages"
+import Header from "./components/Header"
+import Footer from "./components/Footer"
 
 function App() {
   const ProtectedRoute = () => {
@@ -14,7 +18,14 @@ function App() {
       return <div></div>
     }
 
-    return user ? <Outlet /> : <Navigate to={"/auth/signin"} replace />
+    return user ?
+      <main className="flex flex-col gap-8 sm:gap-0 w-full min-h-screen bg-background">
+        <Header />
+        <Outlet />
+        <Footer />
+      </main>
+      :
+      <Navigate to={"/auth/signin"} replace />
   }
   return (
     <BrowserRouter>
@@ -24,8 +35,12 @@ function App() {
           <Route path="/auth/signin" element={<SignInPage />} />
           <Route path="/auth/signup" element={<SignUpPage />} />
         </Route>
+        <Route path="/message" element={<AuthLayout />}>
+          <Route path="/message/:username" element={<MessageUserPage />} />
+        </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="/" element={<IndexPage />} />
+          <Route path="/messages" element={<MessagesPage />} />
         </Route>
       </Routes>
       <Toaster

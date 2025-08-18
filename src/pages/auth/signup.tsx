@@ -2,26 +2,26 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import { useForm, type RegisterOptions } from "react-hook-form";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { auth, db } from "@/firebase";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-type SignInFormInputs = {
+type SignUpFormInputs = {
     email: string,
     password: string,
     username: string,
 }
 
-const SignInPage = () => {
-    const { handleSubmit, formState: { errors }, register } = useForm<SignInFormInputs>();
+const SignUpPage = () => {
+    const { handleSubmit, formState: { errors }, register } = useForm<SignUpFormInputs>();
 
     const [isLoading, setIsLoading] = useState(false);
 
     const navigate = useNavigate();
 
-    const passwordValidation: RegisterOptions<SignInFormInputs, "password"> = {
+    const passwordValidation: RegisterOptions<SignUpFormInputs, "password"> = {
         required: "Password is required",
         minLength: {
             value: 8,
@@ -34,7 +34,7 @@ const SignInPage = () => {
         }
     }
 
-    const onSubmit = async (data: SignInFormInputs) => {
+    const onSubmit = async (data: SignUpFormInputs) => {
         setIsLoading(true);
         const toastId = toast.loading("Creating your account");
         try {
@@ -58,20 +58,27 @@ const SignInPage = () => {
             // Add username to database
             await setDoc(usernameDocRef, { userId: user.uid });
 
+            const usersProfileDocRef = doc(db, "users", user.uid);
+            await setDoc(usersProfileDocRef, {
+                username: username.toLowerCase(),
+                email,
+                createdAt: serverTimestamp(),
+                id: user.uid,
+            })
+
             toast.success("Account created successfully", { id: toastId });
 
             navigate("/");
 
         } catch (e: any) {
-            console.log(e)
-            const errorMsg = e.message ?? e;
+            const errorMsg = e.message ?? "An unknown error occured";
             toast.error(errorMsg, { id: toastId });
         } finally {
             setIsLoading(false);
         }
     }
-    return (
 
+    return (
         <div className="w-full bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
             <img src="/images/logo.png" className="size-[150px] object-cover" />
             <p className="text-graphite text-3xl text-center ubuntu-font">Let Us Sign You Up</p>
@@ -87,8 +94,7 @@ const SignInPage = () => {
                 <Button href="/auth/signin" className="h-[54px] w-full">Sign In</Button>
             </div>
         </div>
-
     )
 }
 
-export default SignInPage;
+export default SignUpPage;
