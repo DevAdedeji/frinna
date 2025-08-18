@@ -1,6 +1,4 @@
 import { useState } from "react";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Copy, User, Mail, MessagesSquare } from "lucide-react";
 import Button from "@/components/ui/Button";
 import { NavLink } from "react-router-dom";
@@ -41,7 +39,7 @@ const IndexPage = () => {
                     currentView === 'default' &&
                     <div className="flex flex-col gap-10">
                         <div className="flex items-center justify-center">
-                            <NavLink className={"btn-shadow size-[200px] bg-white flex flex-col gap-4 items-center justify-center rounded-[5px]"} to="">
+                            <NavLink className={"btn-shadow size-[200px] bg-white flex flex-col gap-4 items-center justify-center rounded-[5px]"} to="/messages">
                                 <div className="rounded-[50%] bg-sky-blue flex items-center justify-center p-2 size-[50px] text-white">
                                     <MessagesSquare />
                                 </div>
