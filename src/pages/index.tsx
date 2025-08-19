@@ -38,7 +38,7 @@ const IndexPage = () => {
         }
     }
     return (
-        <div className="flex-grow py-0 md:py-10 w-[90%] mx-auto mb-8 sm:mb-0">
+        <div className="flex-grow py-0 md:py-5 w-[90%] mx-auto mb-8">
             {
                 user && user.displayName ?
                     <div className="w-full md:w-[80%] min-h-[70vh] flex flex-col gap-10 mx-auto border border-white bg-white custom-shadow rounded-3xl px-5 py-5 sm:py-10">
