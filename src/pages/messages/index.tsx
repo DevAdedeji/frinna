@@ -93,22 +93,44 @@ const MessagesPage = () => {
         <div className="flex-grow py-0 md:py-10 w-[90%] mx-auto mb-8 sm:mb-0 flex flex-col items-center justify-center">
             <div className="flex-grow w-full bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
                 {
+                    pageState.isLoading && (
+                        <div className="w-full flex items-center justify-center">
+                            <p className="text-charcoal-65">Loading messages...</p>
+                        </div>
+                    )
+                }
+                {
+                    pageState.error && (
+                        <div className="w-full flex items-center justify-center">
+                            <p className="text-red-500">{pageState.error}</p>
+                        </div>
+                    )
+                }
+                {
                     pageState.messages.length > 0 &&
                     (
                         <div className="w-[90%] mx-auto flex flex-col gap-4">
                             {pageState.messages.map((message: AnonMessageData, index: number) => {
                                 if (pageState.messages.length === index + 1) {
                                     return (
-                                        <div key={message.id} ref={lastMessageRef} className="border border-charcoal-65 rounded-md p-4 flex flex-col gap-4">
+                                        <div key={message.id} ref={lastMessageRef} className="border border-grey rounded-md p-4 flex flex-col gap-1">
+                                            <p className="font-bold">Message:</p>
                                             <p>{message.messageText}</p>
-                                            <p className="self-end text-charcoal-65 text-sm">{message.createdAt.toDate().toLocaleDateString()}</p>
+                                            <div className="mt-2 flex items-center justify-between">
+                                                <p className="font-medium">-Anonymous</p>
+                                                <p className="text-charcoal-65 text-sm">{message.createdAt.toDate().toLocaleDateString()}</p>
+                                            </div>
                                         </div>
                                     )
                                 } else {
                                     return (
-                                        <div key={message.id} className="border border-charcoal-65 rounded-md p-4 flex flex-col gap-4">
+                                        <div key={message.id} className="border border-grey rounded-md p-4 flex flex-col gap-1">
+                                            <p className="font-bold">Message:</p>
                                             <p>{message.messageText}</p>
-                                            <p className="self-end text-charcoal-65 text-sm">{message.createdAt.toDate().toLocaleDateString()}</p>
+                                            <div className="mt-2 flex items-center justify-between">
+                                                <p className="font-medium">-Anonymous</p>
+                                                <p className="text-charcoal-65 text-sm">{message.createdAt.toDate().toLocaleDateString()}</p>
+                                            </div>
                                         </div>
                                     )
                                 }

@@ -16,7 +16,7 @@ const IndexPage = () => {
     const { user } = useAuthStore();
     const copyToClipboard = () => {
         try {
-            navigator.clipboard.writeText(`https://frinna.xyz/message/${user?.displayName ?? ""}`);
+            navigator.clipboard.writeText(`https://frinna.vercel.app/message/${user?.displayName ?? ""}`);
             toast.success("Profile link copied");
         } catch (e) {
             throw e;
@@ -29,7 +29,7 @@ const IndexPage = () => {
                     <p className="ubuntu-font font-bold text-[40px] text-charcoal text-center">My Profile</p>
                     <p className="font-bold ubuntu-font text-xl text-charcoal">@ {user?.displayName}</p>
                     <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-4 text-midnight">
-                        <p className="font-medium">{`https://frinna.xyz/message/${user?.displayName}`}</p>
+                        <p className="font-medium">{`https://frinna.vercel.app/message/${user?.displayName}`}</p>
                         <button className="cursor-pointer" onClick={copyToClipboard}>
                             <Copy />
                         </button>
