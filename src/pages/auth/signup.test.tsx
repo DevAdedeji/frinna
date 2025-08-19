@@ -6,6 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import toast from "react-hot-toast";
 import { getDoc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { useAuthStore } from "@/store/useAuthStore";
 
 const mockNavigate = vi.fn();
 vi.mock('react-router-dom', async () => {
@@ -27,11 +28,14 @@ const mockedSetDoc = vi.mocked(setDoc);
 const mockedToastSuccess = vi.mocked(toast.success);
 const mockedToastError = vi.mocked(toast.error);
 const mockedToastLoading = vi.mocked(toast.loading);
+const mockedUseAuthStore = vi.mocked(useAuthStore);
 
 
 describe("signup page", () => {
     beforeEach(() => {
         vi.clearAllMocks();
+        const mockSetUser = vi.fn();
+        mockedUseAuthStore.mockReturnValue({ setUser: mockSetUser });
     })
     it("should allow a new user to sign up successfully", async () => {
         const user = userEvent.setup();

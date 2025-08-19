@@ -5,7 +5,7 @@ const AuthLayout = () => {
     return (
         <main className="flex flex-col w-full min-h-screen bg-background">
             <Header />
-            <div className="flex-grow py-0 md:py-10 w-[90%] mx-auto mb-8 sm:mb-0">
+            <div className="flex-grow py-0 md:py-5 w-[90%] mx-auto mb-8 sm:mb-0">
                 <div className="flex flex-col lg:flex-row gap-10 lg:gap-0 items-center justify-between">
                     <div className="lg:order-1 order-2 flex flex-col gap-2 sm:gap-8 w-full sm:w-[500px]">
                         <img src="/images/mockup.png" className="sm:h-[600px] w-full object-contain" alt="mockup" />

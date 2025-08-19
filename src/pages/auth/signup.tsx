@@ -5,8 +5,9 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
 import { auth, db } from "@/firebase";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useAuthStore } from "@/store/useAuthStore";
+import { useNavigate } from "react-router-dom";
 
 type SignUpFormInputs = {
     email: string,
@@ -18,7 +19,7 @@ const SignUpPage = () => {
     const { handleSubmit, formState: { errors }, register } = useForm<SignUpFormInputs>();
 
     const [isLoading, setIsLoading] = useState(false);
-
+    const { setUser } = useAuthStore();
     const navigate = useNavigate();
 
     const passwordValidation: RegisterOptions<SignUpFormInputs, "password"> = {
@@ -39,7 +40,7 @@ const SignUpPage = () => {
         const toastId = toast.loading("Creating your account");
         try {
             const { email, password, username } = data;
-            // DevAdedeji Human Input: Search if username has been taken by another user first
+
             const formattedUsername = username.toLowerCase().trim();
             const usernameDocRef = doc(db, "usernames", formattedUsername);
             const usernameDoc = await getDoc(usernameDocRef);
@@ -67,7 +68,7 @@ const SignUpPage = () => {
             })
 
             toast.success("Account created successfully", { id: toastId });
-
+            setUser(user);
             navigate("/");
 
         } catch (e: any) {

@@ -11,25 +11,31 @@ import MessagesPage from "./pages/messages"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 
+const AppLayout = () => {
+  return (
+    <main className="flex flex-col w-full min-h-screen bg-background">
+      <Header />
+      <div className="flex-grow">
+        <Outlet />
+      </div>
+      <Footer />
+    </main>
+  );
+};
+
+
 function App() {
   const ProtectedRoute = () => {
-    const { user, isLoading } = useAuthStore();
-    if (isLoading) {
+    const { user, isAuthReady } = useAuthStore();
+    if (!isAuthReady) {
       return <div></div>
     }
 
-    return user ?
-      <main className="flex flex-col w-full min-h-screen bg-background">
-        <Header />
-        <Outlet />
-        <Footer />
-      </main>
-      :
-      <Navigate to={"/auth/signin"} replace />
+    return user ? <Outlet /> : <Navigate to={"/auth/signin"} replace />
   }
   const GeustRoute = () => {
-    const { user, isLoading } = useAuthStore();
-    if (isLoading) {
+    const { user, isAuthReady } = useAuthStore();
+    if (!isAuthReady) {
       return <div></div>
     }
     return user ? <Navigate to={"/"} replace /> : <Outlet />
@@ -48,8 +54,10 @@ function App() {
           <Route path="/message/:username" element={<MessageUserPage />} />
         </Route>
         <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<IndexPage />} />
-          <Route path="/messages" element={<MessagesPage />} />
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<IndexPage />} />
+            <Route path="/messages" element={<MessagesPage />} />
+          </Route>
         </Route>
       </Routes>
       <Toaster

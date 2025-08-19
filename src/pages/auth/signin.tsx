@@ -5,7 +5,6 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/firebase";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 
 type SignInFormInputs = {
     email: string,
@@ -17,9 +16,6 @@ const SignInPage = () => {
 
     const [isLoading, setIsLoading] = useState(false);
 
-    const navigate = useNavigate();
-
-
     const onSubmit = async (data: SignInFormInputs) => {
         setIsLoading(true);
         const toastId = toast.loading("Signing you in....")
@@ -27,7 +23,6 @@ const SignInPage = () => {
             const { email, password } = data;
             await signInWithEmailAndPassword(auth, email, password);
             toast.success("Welcome back", { id: toastId });
-            navigate("/");
         } catch (e: any) {
             let errorMsg = e.message.replace("FirebaseError: ", "");
             errorMsg = errorMsg.replace("Firebase: ", "")
