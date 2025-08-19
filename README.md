@@ -31,11 +31,11 @@ Here's a breakdown of the current and planned features:
 
 This project leverages a modern, professional tech stack:
 
-*   **Framework:** React 18
+*   **Framework:** React 19
 *   **Build Tool:** Vite
 *   **Language:** TypeScript
 *   **Styling:** Tailwind CSS
-*   **Routing:** React Router DOM v6
+*   **Routing:** React Router DOM v7.7
 *   **State Management:** Zustand
 *   **Backend & Database:** Firebase (Authentication & Firestore)
 *   **Form Handling:** React Hook Form
@@ -58,7 +58,7 @@ To get a local copy up and running, follow these simple steps.
 
 ### Prerequisites
 
-*   Node.js (v18 or later)
+*   Node.js (v22)
 *   npm or yarn
 
 ### Installation
