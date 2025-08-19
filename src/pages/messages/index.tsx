@@ -91,7 +91,7 @@ const MessagesPage = () => {
 
     return (
         <div className="flex-grow py-0 md:py-10 w-[90%] mx-auto mb-8 sm:mb-0 flex flex-col items-center justify-center">
-            <div className="flex-grow w-full bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 items-center justify-center">
+            <div className={"flex-grow w-full bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 justify-center" + (pageState.isLoading || pageState.messages.length === 0 ? "items-center" : "items-start")}>
                 {
                     pageState.isLoading && (
                         <div className="w-full flex items-center justify-center">
@@ -103,6 +103,13 @@ const MessagesPage = () => {
                     pageState.error && (
                         <div className="w-full flex items-center justify-center">
                             <p className="text-red-500">{pageState.error}</p>
+                        </div>
+                    )
+                }
+                {
+                    pageState.messages.length === 0 && (
+                        <div className="w-full flex items-center justify-center">
+                            <p className="text-charcoal-65">No messages to display</p>
                         </div>
                     )
                 }
