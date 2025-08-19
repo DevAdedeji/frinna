@@ -40,7 +40,7 @@ const SignUpPage = () => {
         try {
             const { email, password, username } = data;
             // DevAdedeji Human Input: Search if username has been taken by another user first
-            const formattedUsername = username.toLowerCase();
+            const formattedUsername = username.toLowerCase().trim();
             const usernameDocRef = doc(db, "usernames", formattedUsername);
             const usernameDoc = await getDoc(usernameDocRef);
             if (usernameDoc.exists()) {
@@ -52,7 +52,7 @@ const SignUpPage = () => {
             const user = userCredential.user;
             //  Update user display name to the username
             await updateProfile(user, {
-                displayName: username,
+                displayName: username.trim(),
             })
 
             // Add username to database
@@ -60,7 +60,7 @@ const SignUpPage = () => {
 
             const usersProfileDocRef = doc(db, "users", user.uid);
             await setDoc(usersProfileDocRef, {
-                username: username.toLowerCase(),
+                username: username.toLowerCase().trim(),
                 email,
                 createdAt: serverTimestamp(),
                 id: user.uid,
