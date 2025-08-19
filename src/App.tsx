@@ -27,13 +27,22 @@ function App() {
       :
       <Navigate to={"/auth/signin"} replace />
   }
+  const GeustRoute = () => {
+    const { user, isLoading } = useAuthStore();
+    if (isLoading) {
+      return <div></div>
+    }
+    return user ? <Navigate to={"/"} replace /> : <Outlet />
+  }
   return (
     <BrowserRouter>
       <AuthListener />
       <Routes>
-        <Route path="/auth" element={<AuthLayout />}>
-          <Route path="/auth/signin" element={<SignInPage />} />
-          <Route path="/auth/signup" element={<SignUpPage />} />
+        <Route element={<GeustRoute />}>
+          <Route path="/auth" element={<AuthLayout />}>
+            <Route path="/auth/signin" element={<SignInPage />} />
+            <Route path="/auth/signup" element={<SignUpPage />} />
+          </Route>
         </Route>
         <Route path="/message" element={<AuthLayout />}>
           <Route path="/message/:username" element={<MessageUserPage />} />
