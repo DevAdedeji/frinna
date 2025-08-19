@@ -28,8 +28,8 @@ const IndexPage = () => {
                 <div className="flex flex-col items-center gap-4">
                     <p className="ubuntu-font font-bold text-[40px] text-charcoal text-center">My Profile</p>
                     <p className="font-bold ubuntu-font text-xl text-charcoal">@ {user?.displayName}</p>
-                    <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-4 text-midnight">
-                        <p className="font-medium">{`https://frinna.vercel.app/message/${user?.displayName}`}</p>
+                    <div className="flex flex-wrap items-center justify-center gap-1 sm:gap-4 text-midnight w-[90%] mx-auto">
+                        <p className="font-medium truncate">{`https://frinna.vercel.app/message/${user?.displayName}`}</p>
                         <button className="cursor-pointer" onClick={copyToClipboard}>
                             <Copy />
                         </button>
