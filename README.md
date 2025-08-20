@@ -107,5 +107,3 @@ To run the component and integration tests, use the following command:
 npm run test
 ```
 
-## 📜 License
-Distributed under the MIT License. See LICENSE for more information.
