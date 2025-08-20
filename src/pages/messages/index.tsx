@@ -103,6 +103,8 @@ const MessagesPage = () => {
                             <div className="h-20 bg-gray-300 rounded-md w-full max-w-md"></div>
                             <div className="h-20 bg-gray-300 rounded-md w-full max-w-md"></div>
                             <div className="h-20 bg-gray-300 rounded-md w-full max-w-md"></div>
+                            <div className="h-20 bg-gray-300 rounded-md w-full max-w-md"></div>
+                            <div className="h-20 bg-gray-300 rounded-md w-full max-w-md"></div>
                         </div>
                     )
                 }

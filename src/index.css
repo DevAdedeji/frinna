@@ -37,3 +37,15 @@
 button {
   cursor: pointer;
 }
+
+.cnview-shadow {
+  box-shadow: -1px 4px 10px 0px #00000026;
+}
+
+.no-scrollbar {
+  overflow: scroll;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
