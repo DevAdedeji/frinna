@@ -22,7 +22,7 @@ const ConversationList = ({ onConversationSelect, selectedConversationId }: Conv
             <div className="w-full flex flex-col overflow-y-auto no-scrollbar">
                 {
                     list.map((item, index) => (
-                        <button type="button" key={index} className={"w-full  flex justify-between py-5" + (index === list.length - 1 ? " border-none" : " border-b border-grey") + (selectedConversationId === item ? "bg-sky-200" : "bg-transparent")} onClick={() => onConversationSelect(item.toString())}>
+                        <button type="button" key={index} className={"w-full  flex justify-between py-5" + (index === list.length - 1 ? " border-none" : " border-b border-grey") + (selectedConversationId === item.toString() ? "bg-sky-200" : "bg-transparent")} onClick={() => onConversationSelect(item.toString())}>
                             <div className="flex items-center gap-2">
                                 <div className="size-[50px] rounded-full flex items-center justify-center">
                                     {
