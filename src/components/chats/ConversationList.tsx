@@ -18,9 +18,12 @@ interface ConversationListProps {
 const ConversationList = ({ onConversationSelect, selectedConversation }: ConversationListProps) => {
 
     const [conversations, setConversations] = useState<Conversation[]>([]);
+    const [filteredConversations, setFilteredConversations] = useState<Conversation[]>([]);
 
     const [openNewConversation, setOpenNewConversation] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState("");
+
     const { user } = useAuthStore();
     const navigate = useNavigate();
 
@@ -49,11 +52,26 @@ const ConversationList = ({ onConversationSelect, selectedConversation }: Conver
                 ...doc.data()
             })) as Conversation[];
             setConversations(convos);
+            setFilteredConversations(convos);
             setIsLoading(false);
         });
 
         return () => unsubscribe();
     }, [user]);
+
+    useEffect(() => {
+        if (searchTerm.length > 0) {
+            const fConversations = conversations.filter(conv => {
+                const recipient = getRecipientInfo(conv);
+                if (recipient?.displayName.toLowerCase().includes(searchTerm.toLowerCase())) {
+                    return conv;
+                }
+            })
+            setFilteredConversations(fConversations)
+        } else {
+            setFilteredConversations(conversations);
+        }
+    }, [searchTerm])
 
     const getRecipientInfo = (conversation: Conversation): ParticipantInfo | null => {
         const recipentId = conversation.participants.find(con => con !== user?.uid);
@@ -77,7 +95,7 @@ const ConversationList = ({ onConversationSelect, selectedConversation }: Conver
                 </Button>
                 <p className="ubuntu-font font-bold text-3xl text-charcoal ">Chats</p>
             </div>
-            <Input placeholder="Search conversation" ringColor="ring-charcoal" className="mt-4" disabled />
+            <Input placeholder="Search friends" ringColor="ring-charcoal" className="mt-4" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
             <div className="w-full flex h-full flex-col overflow-y-auto no-scrollbar relative">
                 {
                     isLoading && conversations.length === 0 ?
@@ -101,10 +119,10 @@ const ConversationList = ({ onConversationSelect, selectedConversation }: Conver
                 }
                 {
                     showConversations &&
-                    conversations.map((conversation, index) => {
+                    filteredConversations.map((conversation, index) => {
                         const recipient = getRecipientInfo(conversation);
                         return (
-                            <button type="button" key={index} className={"w-full  flex justify-between py-5" + (index === conversations.length - 1 ? " border-none" : " border-b border-background") + (selectedConversation === conversation ? "bg-sky-200" : "bg-transparent")} onClick={() => onConversationSelect(conversation)}>
+                            <button type="button" key={index} className={"w-full  flex justify-between py-5" + (index === filteredConversations.length - 1 ? " border-none" : " border-b border-background") + (selectedConversation === conversation ? "bg-sky-200" : "bg-transparent")} onClick={() => onConversationSelect(conversation)}>
                                 <div className="flex items-center gap-2">
                                     <div className="size-[50px] rounded-full flex items-center justify-center">
                                         {
