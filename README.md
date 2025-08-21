@@ -12,9 +12,8 @@ Frinna is a web application that allows users to receive anonymous messages and 
 
 ## ✨ Features
 
-Here's a breakdown of the current and planned features:
+Here's a breakdown of the features implemented:
 
-**Implemented:**
 *   **Firebase Authentication:** Secure user sign-up and sign-in with email and password.
 *   **Unique Username Registration:** Firestore rules and checks ensure every username is unique.
 *   **Protected Routes:** Client-side routing that protects user-only pages from unauthenticated access.
@@ -23,8 +22,6 @@ Here's a breakdown of the current and planned features:
 *   **Real-time Auth State:** Global state management with Zustand ensures the UI instantly reacts to auth changes.
 *   **Toast Notifications:** User feedback for actions like login success or errors, powered by `react-hot-toast`.
 *   **Anonymous Mailbox:** A system for non-registered users to send one-way anonymous messages to registered users.
-
-**In Progress / To-Do:**
 *   **Real-Time Direct Chat:** A fully-featured, real-time chat system for registered users to communicate directly.
 
 ## 🛠️ Tech Stack
