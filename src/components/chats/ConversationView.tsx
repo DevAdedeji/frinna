@@ -52,7 +52,6 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
         }
         try {
             setLoading(true);
-            const toastId = toast.loading("Sending your message...");
             const conversationRef = doc(db, "conversations", conversation.id);
             const messagesRef = collection(db, "conversations", conversation?.id, "messages");
             reset({
@@ -68,7 +67,6 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                 lastMessageText: data.message,
                 lastMessageSenderId: user.uid,
             })
-            toast.success("Message sent!", { id: toastId });
         } catch (e: any) {
             toast.error(e.message || "An error occurred")
         } finally {
