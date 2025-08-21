@@ -106,6 +106,8 @@ const NewConversationModal = ({ isOpen, onClose }: NewConversationModalProps) =>
                 });
                 await wb.commit();
                 toast.success("Conversation started successfully")
+                setRecipient(null);
+                setMessage("");
                 onClose();
             }
         } catch (e: any) {

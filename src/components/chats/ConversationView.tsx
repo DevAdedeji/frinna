@@ -55,6 +55,9 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
             const toastId = toast.loading("Sending your message...");
             const conversationRef = doc(db, "conversations", conversation.id);
             const messagesRef = collection(db, "conversations", conversation?.id, "messages");
+            reset({
+                message: ""
+            })
             await addDoc(messagesRef, {
                 text: data.message,
                 senderId: user.uid,
@@ -64,9 +67,6 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                 lastMessageTimestamp: serverTimestamp(),
                 lastMessageText: data.message,
                 lastMessageSenderId: user.uid,
-            })
-            reset({
-                message: ""
             })
             toast.success("Message sent!", { id: toastId });
         } catch (e: any) {
