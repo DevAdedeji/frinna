@@ -65,6 +65,7 @@ const SignUpPage = () => {
                 email,
                 createdAt: serverTimestamp(),
                 id: user.uid,
+                photoURL: user.photoURL,
             })
 
             toast.success("Account created successfully", { id: toastId });

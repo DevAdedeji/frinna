@@ -1,27 +1,28 @@
 import ConversationList from "@/components/chats/ConversationList";
 import ConversationView from "@/components/chats/ConversationView";
 import { useState } from "react";
+import type { Conversation } from "@/types"
 
 const ChatsPage = () => {
-    const [selectedConversationId, setSelectedConversationId] = useState<string | null>(null);
+    const [selectedConversation, setSelectedConversation] = useState<Conversation | null>(null);
     return (
         <div className="flex flex-grow">
             <div className={`
-                ${selectedConversationId ? 'hidden' : 'flex'}
+                ${selectedConversation ? 'hidden' : 'flex'}
                 lg:flex w-full lg:w-[30%]
             `}>
                 <ConversationList
-                    onConversationSelect={(id) => setSelectedConversationId(id)}
-                    selectedConversationId={selectedConversationId}
+                    onConversationSelect={(conversation) => setSelectedConversation(conversation)}
+                    selectedConversation={selectedConversation}
                 />
             </div>
             <div className={`
-                ${selectedConversationId ? 'flex' : 'hidden'}
+                ${selectedConversation ? 'flex' : 'hidden'}
                 lg:flex w-full lg:w-[70%]
             `}>
                 <ConversationView
-                    conversationId={selectedConversationId}
-                    onBack={() => setSelectedConversationId(null)}
+                    conversation={selectedConversation}
+                    onBack={() => setSelectedConversation(null)}
                 />
             </div>
         </div>
