@@ -77,7 +77,7 @@ const ConversationList = ({ onConversationSelect, selectedConversation }: Conver
                 </Button>
                 <p className="ubuntu-font font-bold text-3xl text-charcoal ">Chats</p>
             </div>
-            <Input placeholder="Search conversation" ringColor="ring-charcoal" className="mt-4" />
+            <Input placeholder="Search conversation" ringColor="ring-charcoal" className="mt-4" disabled />
             <div className="w-full flex h-full flex-col overflow-y-auto no-scrollbar relative">
                 {
                     isLoading && conversations.length === 0 ?

@@ -98,7 +98,7 @@ const MessagesPage = () => {
             <div className={"flex-grow w-full bg-white custom-shadow rounded-3xl py-9 flex flex-col gap-4 justify-center" + (pageState.isLoading || pageState.messages.length === 0 ? "items-center" : "items-start")}>
                 {
                     pageState.isLoading && (
-                        <div className="w-full flex flex-col items-center justify-center animate-pulse gap-3">
+                        <div className="w-[90%] mx-auto flex flex-col items-center justify-center animate-pulse gap-3">
                             <p className="ubuntu-font font-bold text-3xl text-charcoal text-center">Your Messages</p>
                             <div className="h-20 bg-gray-300 rounded-md w-full max-w-md"></div>
                             <div className="h-20 bg-gray-300 rounded-md w-full max-w-md"></div>
