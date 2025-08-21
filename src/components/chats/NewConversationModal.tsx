@@ -106,6 +106,7 @@ const NewConversationModal = ({ isOpen, onClose }: NewConversationModalProps) =>
                 });
                 await wb.commit();
                 toast.success("Conversation started successfully")
+                onClose();
             }
         } catch (e: any) {
             toast.error(e.message || "An error occured")
@@ -174,7 +175,7 @@ const NewConversationModal = ({ isOpen, onClose }: NewConversationModalProps) =>
                                                                 <img src={user.photoURL} alt="User Avatar" className="rounded-full size-7 object-cover" />
                                                             ) :
                                                             (
-                                                                <div className="size-7 bg-gray-300 rounded-full text-center flex items-center justify-center">{user.username[0]}</div>
+                                                                <div className="size-7 bg-gray-300 rounded-full text-center flex items-center justify-center uppercase">{user.username[0]}</div>
                                                             )
                                                     }
                                                     <p className="capitalize">{user.username}</p>

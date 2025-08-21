@@ -104,7 +104,7 @@ const ConversationList = ({ onConversationSelect, selectedConversation }: Conver
                     conversations.map((conversation, index) => {
                         const recipient = getRecipientInfo(conversation);
                         return (
-                            <button type="button" key={index} className={"w-full  flex justify-between py-5" + (index === conversations.length - 1 ? " border-none" : " border-b border-grey") + (selectedConversation === conversation ? "bg-sky-200" : "bg-transparent")} onClick={() => onConversationSelect(conversation)}>
+                            <button type="button" key={index} className={"w-full  flex justify-between py-5" + (index === conversations.length - 1 ? " border-none" : " border-b border-background") + (selectedConversation === conversation ? "bg-sky-200" : "bg-transparent")} onClick={() => onConversationSelect(conversation)}>
                                 <div className="flex items-center gap-2">
                                     <div className="size-[50px] rounded-full flex items-center justify-center">
                                         {

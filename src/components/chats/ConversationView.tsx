@@ -116,7 +116,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                     <p className="font-bold capitalize">Chat with {getRecipientInfo?.displayName}</p>
                 </div>
             </div>
-            <div className="flex-grow pt-4 px-4 overflow-y-auto flex flex-col gap-4 relative no-scrollbar">
+            <div className="flex-grow h-full pt-4 px-4 overflow-y-auto flex flex-col gap-4 relative no-scrollbar">
                 {
                     fetchingMessages && messages.length === 0 ?
                         (
@@ -143,11 +143,11 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                     })
                 }
                 <div ref={messagesEndRef} />
-                <form className="w-full flex items-center gap-2 sticky bottom-0 left-0 right-0 px-4 py-2 bg-white" onSubmit={handleSubmit(onSubmit)}>
-                    <Input placeholder="Type your message..." ringColor="ring-midnight" className="w-full" {...register("message", { required: "Message is required" })} error={errors.message?.message} />
-                    <button className="uppercase text-mdidnight font-bold" disabled={loading}>send</button>
-                </form>
             </div>
+            <form className="w-full flex items-center gap-2 flex-shrink-0 px-4 py-2 bg-white" onSubmit={handleSubmit(onSubmit)}>
+                <Input placeholder="Type your message..." ringColor="ring-midnight" className="w-full" {...register("message", { required: "Message is required" })} error={errors.message?.message} />
+                <button className="uppercase text-mdidnight font-bold" disabled={loading}>send</button>
+            </form>
         </div>
     )
 }
