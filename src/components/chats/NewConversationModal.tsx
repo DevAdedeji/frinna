@@ -15,10 +15,9 @@ import type { UserProfile } from "@/types"
 interface NewConversationModalProps {
     isOpen: boolean,
     onClose: () => void,
-    onConversationCreated: () => void;
 }
 
-const NewConversationModal = ({ isOpen, onClose, onConversationCreated }: NewConversationModalProps) => {
+const NewConversationModal = ({ isOpen, onClose }: NewConversationModalProps) => {
     const [searchTerm, setSearchTerm] = useState("")
     const debouncedSearchTerm = useDebounce(searchTerm, 500);
     const [searchResults, setSearchResults] = useState<UserProfile[]>([]);
@@ -107,9 +106,6 @@ const NewConversationModal = ({ isOpen, onClose, onConversationCreated }: NewCon
                 });
                 await wb.commit();
                 toast.success("Conversation started successfully")
-                onConversationCreated();
-            } else {
-                onConversationCreated();
             }
         } catch (e: any) {
             toast.error(e.message || "An error occured")
@@ -147,7 +143,7 @@ const NewConversationModal = ({ isOpen, onClose, onConversationCreated }: NewCon
                                                     <img src={recipient.photoURL} alt="recipient Avatar" className="rounded-full size-7 object-cover" />
                                                 ) :
                                                 (
-                                                    <div className="size-7 bg-gray-300 rounded-full text-center flex items-center justify-center">{recipient.username[0]}</div>
+                                                    <div className="size-7 bg-gray-300 rounded-full text-center flex items-center uppercase justify-center">{recipient.username[0]}</div>
                                                 )
                                         }
                                         <p>{recipient.username}</p>

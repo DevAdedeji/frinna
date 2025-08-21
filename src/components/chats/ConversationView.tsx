@@ -26,6 +26,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
 
     const [messages, setMessages] = useState<Message[]>([])
     const [loading, setLoading] = useState(false);
+    const [fetchingMessages, setFetchingMessages] = useState(false);
 
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -78,6 +79,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
 
     useEffect(() => {
         if (!conversation?.id) return;
+        setFetchingMessages(true);
         const messagesRef = collection(db, "conversations", conversation.id, "messages");
         const q = query(messagesRef, orderBy("createdAt"));
         const unsubscribe = onSnapshot(q, (querySnapShot) => {
@@ -86,6 +88,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                 ...doc.data(),
             })) as Message[];
             setMessages(msgs);
+            setFetchingMessages(false);
         })
         return () => unsubscribe();
     }, [conversation])
@@ -113,8 +116,21 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                     <p className="font-bold capitalize">Chat with {getRecipientInfo?.displayName}</p>
                 </div>
             </div>
-            <div className="flex-grow p-4 overflow-y-auto flex flex-col gap-4 relative">
+            <div className="flex-grow pt-4 px-4 overflow-y-auto flex flex-col gap-4 relative no-scrollbar">
                 {
+                    fetchingMessages && messages.length === 0 ?
+                        (
+                            <div className="flex items-center justify-center text-center h-full">
+                                <p className="text-midnight text-2xl font-semibold">Fetching messages...</p>
+                            </div>
+                        )
+
+                        : (
+                            null
+                        )
+                }
+                {
+                    messages.length > 0 &&
                     messages.map(message => {
                         const isSentByCurrentUser = message.senderId === user?.uid;
                         return (
@@ -127,7 +143,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                     })
                 }
                 <div ref={messagesEndRef} />
-                <form className="w-full flex items-center gap-2 absolute bottom-2 left-0 right-0 px-4" onSubmit={handleSubmit(onSubmit)}>
+                <form className="w-full flex items-center gap-2 sticky bottom-0 left-0 right-0 px-4 py-2 bg-white" onSubmit={handleSubmit(onSubmit)}>
                     <Input placeholder="Type your message..." ringColor="ring-midnight" className="w-full" {...register("message", { required: "Message is required" })} error={errors.message?.message} />
                     <button className="uppercase text-mdidnight font-bold" disabled={loading}>send</button>
                 </form>
