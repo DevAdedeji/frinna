@@ -21,12 +21,13 @@ const MessageBubble = ({ message, isSentByCurrentUser, onMessageSelect }: Messag
             <div className="flex flex-col">
                 {
                     message.replyingTo &&
-                    <div className={message.replyingTo.originalSenderName === user?.displayName ? " bg-gray-200 p-2 rounded-t-lg text-xs" : " bg-sky-blue text-white p-2 rounded-t-lg text-xs"}>
+                    <div className={`p-2 rounded-t-lg text-xs flex gap-1 opacity-50 ${bubbleStyles}`}>
+                        <p className="font-semibold capitalize">{message.replyingTo.originalSenderName.toLowerCase() === user?.displayName?.toLowerCase() ? "You" : message.replyingTo.originalSenderName}: </p>
                         <p>{message.replyingTo.originalMessageText.length > 200 ? message.replyingTo.originalMessageText.slice(0, 200) + "..." : message.replyingTo.originalMessageText}</p>
                     </div>
                 }
                 <div className={`max-w-xs lg:max-w-md p-2 ${bubbleStyles} ${message.replyingTo ? " rounded-b-lg" : " rounded-lg"}`}>
-                    <p className="text-sm lg:text-base">{message.text}</p>
+                    <p className="text-sm">{message.text}</p>
                     <p className={`text-xs mt-2 text-right ${isSentByCurrentUser ? 'text-sky-200' : 'text-gray-500'}`}>
                         {message.createdAt?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>

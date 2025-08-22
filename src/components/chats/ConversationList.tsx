@@ -132,7 +132,13 @@ const ConversationList = ({ onConversationSelect, selectedConversation }: Conver
                                         <p className="text-sm text-charcoal-65 truncate">{conversation.lastMessageText.length > 40 ? conversation.lastMessageText.slice(0, 40) + "..." : conversation.lastMessageText || "No messages yet"}</p>
                                     </div>
                                 </div>
-                                <p className="text-charcoal-65 text-xs">{conversation.lastMessageTimestamp?.toDate().toLocaleDateString()}</p>
+                                <div className="flex flex-col justify-between gap-1">
+                                    {
+                                        (!conversation.lastMessageIsRead && conversation.lastMessageSenderId !== user?.uid) &&
+                                        <p className="bg-sky-blue p-1 rounded text-white text-xs capitalize">New</p>
+                                    }
+                                    <p className="text-charcoal-65 text-xs">{conversation.lastMessageTimestamp?.toDate().toLocaleDateString()}</p>
+                                </div>
                             </button>
                         )
                     })

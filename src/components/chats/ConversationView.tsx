@@ -58,6 +58,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
             reset({
                 message: ""
             })
+            setReplyingToMessage(null);
             await addDoc(messagesRef, {
                 text: data.message,
                 senderId: user.uid,
@@ -68,11 +69,11 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                     originalMessageText: replyingToMessage?.text
                 } : null
             });
-            setReplyingToMessage(null);
             await updateDoc(conversationRef, {
                 lastMessageTimestamp: serverTimestamp(),
                 lastMessageText: data.message,
                 lastMessageSenderId: user.uid,
+                lastMessageIsRead: false,
             })
         } catch (e: any) {
             toast.error(e.message || "An error occurred")
@@ -95,6 +96,15 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
             setMessages(msgs);
             setFetchingMessages(false);
         })
+        const updateLastRead = async () => {
+            if (conversation.lastMessageIsRead === false) {
+                const conversationRef = doc(db, "conversations", conversation.id)
+                await updateDoc(conversationRef, {
+                    lastMessageIsRead: true,
+                })
+            }
+        }
+        updateLastRead();
         return () => unsubscribe();
     }, [conversation])
 

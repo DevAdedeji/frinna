@@ -96,6 +96,7 @@ const NewConversationModal = ({ isOpen, onClose }: NewConversationModalProps) =>
                     lastMessageTimestamp: serverTimestamp(),
                     lastMessageText: message,
                     lastMessageSenderId: user.uid,
+                    lastMessageIsRead: false,
                 }
                 wb.set(conversationRef, newConversationData);
                 const messageRef = doc(collection(db, "conversations", conversationId, "messages"));
@@ -149,7 +150,7 @@ const NewConversationModal = ({ isOpen, onClose }: NewConversationModalProps) =>
                                                     <div className="size-7 bg-gray-300 rounded-full text-center flex items-center uppercase justify-center">{recipient.username[0]}</div>
                                                 )
                                         }
-                                        <p>{recipient.username}</p>
+                                        <p className="capitalize">{recipient.username}</p>
                                     </div>
                                 </div>
                             )
