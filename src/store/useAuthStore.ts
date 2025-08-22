@@ -3,7 +3,7 @@ import type { User } from "firebase/auth";
 
 interface AuthState {
     user: User | null;
-    isAuthReady: Boolean;
+    isAuthReady: boolean;
     setUser: (user: User | null) => void;
     setAuthReady: () => void;
 }
