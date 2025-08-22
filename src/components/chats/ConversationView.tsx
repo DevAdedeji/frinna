@@ -155,7 +155,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                 <div className="w-full flex flex-col">
                     {
                         replyingToMessage &&
-                        <div className="flex items-center gap-2 p-2 bg-gray-200 rounded-t-lg border-l-2 border-midnight">
+                        <div className="flex items-start gap-2 p-2 bg-gray-200 rounded-t-lg border-l-2 border-midnight text-sm">
                             <p className="capitalize font-semibold">{replyingToMessage.senderId === user?.uid ? "You" : getRecipientInfo?.displayName}: </p>
                             <p className="truncate whitespace-pre-wrap">
                                 {replyingToMessage.text.length > 100 ? replyingToMessage.text.slice(0, 100) + "..." : replyingToMessage.text}
