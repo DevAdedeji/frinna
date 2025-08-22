@@ -26,7 +26,7 @@ const MessageBubble = ({ message, isSentByCurrentUser, onMessageSelect }: Messag
                     </div>
                 }
                 <div className={`max-w-xs lg:max-w-md p-2 ${bubbleStyles} ${message.replyingTo ? " rounded-b-lg" : " rounded-lg"}`}>
-                    <p>{message.text}</p>
+                    <p className="text-sm lg:text-base">{message.text}</p>
                     <p className={`text-xs mt-2 text-right ${isSentByCurrentUser ? 'text-sky-200' : 'text-gray-500'}`}>
                         {message.createdAt?.toDate().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>
