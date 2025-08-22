@@ -125,7 +125,7 @@ const NewConversationModal = ({ isOpen, onClose }: NewConversationModalProps) =>
                     {
                         !recipient ?
                             (
-                                <Input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search user by username" aria-label="Search users" />
+                                <Input type="text" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} placeholder="Search user by username" aria-label="Search users" autoComplete="off" />
                             )
                             :
                             (
@@ -194,7 +194,7 @@ const NewConversationModal = ({ isOpen, onClose }: NewConversationModalProps) =>
                             )
                     }
                 </div>
-                <TextArea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Message" />
+                <TextArea value={message} onChange={(e) => setMessage(e.target.value)} placeholder="Message" autoComplete="off" />
                 <Button type="submit" onClick={handleSendMessage} disabled={sending}>Send Message</Button>
             </div>
         </Modal>

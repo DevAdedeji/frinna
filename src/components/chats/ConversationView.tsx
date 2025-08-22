@@ -175,7 +175,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                             </button>
                         </div>
                     }
-                    <Input placeholder="Type your message..." ringColor="ring-midnight" className="w-full" {...register("message", { required: "Message is required" })} error={errors.message?.message} />
+                    <Input placeholder="Type your message..." ringColor="ring-midnight" className="w-full" {...register("message", { required: "Message is required" })} error={errors.message?.message} autoComplete="off" />
                 </div>
                 <button className="uppercase text-mdidnight font-bold" type="submit" disabled={loading}>send</button>
             </form>
