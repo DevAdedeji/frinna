@@ -1,4 +1,4 @@
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 import Button from "../ui/Button";
 import type { Conversation, ParticipantInfo, Message } from "@/types"
 import { useAuthStore } from "@/store/useAuthStore";
@@ -27,6 +27,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
     const [messages, setMessages] = useState<Message[]>([])
     const [loading, setLoading] = useState(false);
     const [fetchingMessages, setFetchingMessages] = useState(false);
+    const [replyingToMessage, setReplyingToMessage] = useState<Message | null>(null);
 
     const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
@@ -60,8 +61,14 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
             await addDoc(messagesRef, {
                 text: data.message,
                 senderId: user.uid,
-                createdAt: serverTimestamp()
+                createdAt: serverTimestamp(),
+                replyingTo: replyingToMessage ? {
+                    originalMessageId: replyingToMessage?.id,
+                    originalSenderName: replyingToMessage?.senderId === user.uid ? "You" : getRecipientInfo?.displayName,
+                    originalMessageText: replyingToMessage?.text
+                } : null
             });
+            setReplyingToMessage(null);
             await updateDoc(conversationRef, {
                 lastMessageTimestamp: serverTimestamp(),
                 lastMessageText: data.message,
@@ -114,7 +121,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                     <p className="font-bold capitalize">Chat with {getRecipientInfo?.displayName}</p>
                 </div>
             </div>
-            <div className="flex-grow h-full pt-4 px-4 overflow-y-auto flex flex-col gap-4 relative no-scrollbar">
+            <div className="flex-grow h-full py-4 px-4 overflow-y-auto flex flex-col gap-4 relative no-scrollbar">
                 {
                     fetchingMessages && messages.length === 0 ?
                         (
@@ -136,15 +143,31 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                                 key={message.id}
                                 message={message}
                                 isSentByCurrentUser={isSentByCurrentUser}
+                                onMessageSelect={(msg) => setReplyingToMessage(msg)}
                             />
                         )
                     })
                 }
                 <div ref={messagesEndRef} />
             </div>
+
             <form className="w-full flex items-center gap-2 flex-shrink-0 px-4 py-2 bg-white" onSubmit={handleSubmit(onSubmit)}>
-                <Input placeholder="Type your message..." ringColor="ring-midnight" className="w-full" {...register("message", { required: "Message is required" })} error={errors.message?.message} />
-                <button className="uppercase text-mdidnight font-bold" disabled={loading}>send</button>
+                <div className="w-full flex flex-col">
+                    {
+                        replyingToMessage &&
+                        <div className="flex items-center gap-2 p-2 bg-gray-200 rounded-t-lg border-l-2 border-midnight">
+                            <p className="capitalize font-semibold">{replyingToMessage.senderId === user?.uid ? "You" : getRecipientInfo?.displayName}: </p>
+                            <p className="truncate whitespace-pre-wrap">
+                                {replyingToMessage.text.length > 100 ? replyingToMessage.text.slice(0, 100) + "..." : replyingToMessage.text}
+                            </p>
+                            <button type="button" className="ml-auto" onClick={() => setReplyingToMessage(null)}>
+                                <X size={16} />
+                            </button>
+                        </div>
+                    }
+                    <Input placeholder="Type your message..." ringColor="ring-midnight" className="w-full" {...register("message", { required: "Message is required" })} error={errors.message?.message} />
+                </div>
+                <button className="uppercase text-mdidnight font-bold" type="submit" disabled={loading}>send</button>
             </form>
         </div>
     )

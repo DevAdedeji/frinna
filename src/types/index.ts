@@ -1,11 +1,18 @@
 import { QueryDocumentSnapshot, type DocumentData, type Timestamp } from "firebase/firestore";
 
+interface ReplyTo {
+    originalMessageId: string,
+    originalSenderName: string,
+    originalMessageText: string,
+}
+
 export interface Message {
     id?: string;
     senderId: string;
     text: string;
     createdAt: Timestamp;
     isRead?: boolean;
+    replyingTo?: ReplyTo
 }
 
 export interface ParticipantInfo {
