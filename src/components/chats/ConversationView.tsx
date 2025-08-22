@@ -64,7 +64,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
                 createdAt: serverTimestamp(),
                 replyingTo: replyingToMessage ? {
                     originalMessageId: replyingToMessage?.id,
-                    originalSenderName: replyingToMessage?.senderId === user.uid ? "You" : getRecipientInfo?.displayName,
+                    originalSenderName: replyingToMessage?.senderId === user.uid ? user.displayName : getRecipientInfo?.displayName,
                     originalMessageText: replyingToMessage?.text
                 } : null
             });

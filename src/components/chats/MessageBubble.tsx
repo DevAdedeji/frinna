@@ -1,5 +1,6 @@
 import { type Message } from "@/types";
 import { Reply } from "lucide-react";
+import { useAuthStore } from "@/store/useAuthStore";
 
 interface MessageBubbleProps {
     message: Message;
@@ -8,6 +9,7 @@ interface MessageBubbleProps {
 }
 
 const MessageBubble = ({ message, isSentByCurrentUser, onMessageSelect }: MessageBubbleProps) => {
+    const { user } = useAuthStore();
     const alignment = isSentByCurrentUser ? 'justify-end ml-auto' : 'justify-start mr-auto';
 
     const bubbleStyles = isSentByCurrentUser
@@ -19,7 +21,7 @@ const MessageBubble = ({ message, isSentByCurrentUser, onMessageSelect }: Messag
             <div className="flex flex-col">
                 {
                     message.replyingTo &&
-                    <div className={message.replyingTo.originalSenderName === "You" ? " bg-gray-200 p-2 rounded-t-lg text-xs" : " bg-sky-blue text-white p-2 rounded-t-lg text-xs"}>
+                    <div className={message.replyingTo.originalSenderName === user?.displayName ? " bg-gray-200 p-2 rounded-t-lg text-xs" : " bg-sky-blue text-white p-2 rounded-t-lg text-xs"}>
                         <p>{message.replyingTo.originalMessageText.length > 200 ? message.replyingTo.originalMessageText.slice(0, 200) + "..." : message.replyingTo.originalMessageText}</p>
                     </div>
                 }
