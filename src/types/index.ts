@@ -41,7 +41,6 @@ export interface ConversationsPageState {
     lastVisible: QueryDocumentSnapshot<DocumentData> | null;
 }
 
-
 export interface UserProfile {
     createdAt: Timestamp,
     email: string,
