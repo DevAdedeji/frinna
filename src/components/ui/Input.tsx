@@ -25,7 +25,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, type,
     const inputStyles = `${baseStyles} ${dynamicRingStyles}`;
     return (
         <div className={className + " relative"}>
-            <input type={inputType} id={inputId} className={inputStyles} ref={ref} {...props} />
+            <input type={inputType} id={inputId} className={inputStyles} ref={ref} autoComplete="off" {...props} />
             {
                 type === 'password' && (
                     <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute inset-y-0 right-0 text-charcoal-65 pr-3" aria-label={showPassword ? "Hide Password" : "Show Password"}>

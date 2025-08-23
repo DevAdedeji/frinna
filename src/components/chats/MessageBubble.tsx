@@ -22,8 +22,7 @@ const MessageBubble = ({ message, isSentByCurrentUser, onMessageSelect }: Messag
                 {
                     message.replyingTo &&
                     <div className={`p-2 rounded-t-lg text-xs flex gap-1 opacity-50 ${bubbleStyles}`}>
-                        <p className="font-semibold capitalize">{message.replyingTo.originalSenderName.toLowerCase() === user?.displayName?.toLowerCase() ? "You" : message.replyingTo.originalSenderName}: </p>
-                        <p>{message.replyingTo.originalMessageText.length > 200 ? message.replyingTo.originalMessageText.slice(0, 200) + "..." : message.replyingTo.originalMessageText}</p>
+                        <p> <span className="font-semibold capitalize">{message.replyingTo.originalSenderName.toLowerCase() === user?.displayName?.toLowerCase() ? "You" : message.replyingTo.originalSenderName}: </span> {message.replyingTo.originalMessageText.length > 200 ? message.replyingTo.originalMessageText.slice(0, 200) + "..." : message.replyingTo.originalMessageText}</p>
                     </div>
                 }
                 <div className={`max-w-xs lg:max-w-md p-2 ${bubbleStyles} ${message.replyingTo ? " rounded-b-lg" : " rounded-lg"}`}>

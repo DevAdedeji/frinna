@@ -97,7 +97,7 @@ const ConversationView = ({ conversation, onBack }: ConversationViewProps) => {
             setFetchingMessages(false);
         })
         const updateLastRead = async () => {
-            if (conversation.lastMessageIsRead === false) {
+            if (conversation.lastMessageIsRead === false && conversation.lastMessageSenderId !== user?.uid) {
                 const conversationRef = doc(db, "conversations", conversation.id)
                 await updateDoc(conversationRef, {
                     lastMessageIsRead: true,

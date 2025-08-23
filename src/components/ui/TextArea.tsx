@@ -18,7 +18,7 @@ const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(({ classNa
 
     return (
         <div className={className}>
-            <textarea className={inputStyles} ref={ref} {...props} />
+            <textarea className={inputStyles} ref={ref} autoComplete="off" {...props} />
         </div>
     )
 })
