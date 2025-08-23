@@ -1,6 +1,7 @@
 # Frinna - Anonymous Messaging Web Application
 
-Frinna is a web application that allows users to receive anonymous messages and engage in real-time chats with other registered users. This project was built to learn React.
+Frinna is a full-stack anonymous messaging application built with React and Firebase. As a developer with 3 years of experience in Vue.js, I created this project as a hands-on challenge to master the React ecosystem, from component architecture and state management to automated testing and deployment.
+
 **Live Demo:** [https://frinna.vercel.app]
 
 ## 📸 Screenshots
@@ -11,18 +12,12 @@ Frinna is a web application that allows users to receive anonymous messages and 
 | ![Sign In Page Screenshot](.github/assets/signin.gif) | ![Sign Up Page Screenshot](.github/assets/signup.gif) | ![User Dashboard Screenshot](.github/assets/profile.png) |
 
 ## ✨ Features
-
-Here's a breakdown of the features implemented:
-
-*   **Firebase Authentication:** Secure user sign-up and sign-in with email and password.
-*   **Unique Username Registration:** Firestore rules and checks ensure every username is unique.
-*   **Protected Routes:** Client-side routing that protects user-only pages from unauthenticated access.
-*   **User Dashboard:** A personalized index page displaying the logged-in user's details.
-*   **Custom Component Library:** Reusable, accessible `Button` and `Input` components built from scratch.
-*   **Real-time Auth State:** Global state management with Zustand ensures the UI instantly reacts to auth changes.
-*   **Toast Notifications:** User feedback for actions like login success or errors, powered by `react-hot-toast`.
-*   **Anonymous Mailbox:** A system for non-registered users to send one-way anonymous messages to registered users.
-*   **Real-Time Direct Chat:** A fully-featured, real-time chat system for registered users to communicate directly.
+- ✅ User Authentication (Email/Password)
+- ✅ Anonymous "Mailbox" System for one-way messages
+- ✅ Real-time, two-way chat for registered users
+- ✅ Message Reply functionality
+- ✅ Fully Responsive Design
+- ✅ Automated CI/CD pipeline with GitHub Actions
 
 ## 🛠️ Tech Stack
 
@@ -62,7 +57,7 @@ To get a local copy up and running, follow these simple steps.
 
 1.  **Clone the repository:**
     ```sh
-    git clone https://github.com/your-username/frinna.git
+    git clone https://github.com/devadedeji/frinna.git
     ```
 2.  **Navigate to the project directory:**
     ```sh
