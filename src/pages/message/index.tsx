@@ -42,6 +42,7 @@ const MessageUserPage = () => {
                         recipientId,
                     })
                 }
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (e: any) {
                 toast.error(e.message ?? e)
             }
@@ -70,6 +71,7 @@ const MessageUserPage = () => {
             reset({
                 messageText: "",
             })
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (e: any) {
             toast.error(e.message || "An unknown error occurred", { id: toastId })
         } finally {
